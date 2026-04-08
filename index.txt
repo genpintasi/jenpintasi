@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>115學年真平教材．數位搶先看</title>
 
 <style>
@@ -32,10 +32,10 @@ body {
     var(--bg);
   color: var(--text);
   padding-top: var(--nav-height);
-  overflow-x: hidden;
+  overflow-x: hidden; /* 徹底杜絕水平捲動 */
 }
 
-/* 導覽列 */
+/* 導覽列彈性調整 */
 .navbar {
   position: fixed;
   top: 0;
@@ -53,33 +53,27 @@ body {
 }
 
 .logo {
-  height: 40px;
+  height: clamp(30px, 4vw, 40px);
   width: auto;
-  display: block;
 }
 
 .nav-right {
   display: flex;
-  gap: 5px;
+  gap: clamp(2px, 1vw, 5px);
 }
 
 .nav-btn {
   text-decoration: none;
   color: var(--text);
-  padding: 8px 12px;
+  padding: 8px clamp(8px, 1.5vw, 12px);
   border-radius: 8px;
   font-weight: 500;
   transition: all 0.3s ease;
-  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  font-size: clamp(0.75rem, 2vw, 0.95rem);
   cursor: pointer;
   border: none;
   background: transparent;
   white-space: nowrap;
-}
-
-.nav-btn:hover {
-  background: rgba(30, 136, 229, 0.1);
-  color: var(--blue);
 }
 
 .nav-btn.active {
@@ -87,73 +81,56 @@ body {
   color: var(--white);
 }
 
-/* Hero 區塊 */
+/* Hero 區塊縮放 */
 .hero {
   background: linear-gradient(135deg, var(--red), var(--blue));
   color: var(--white);
   text-align: center;
-  padding: clamp(40px, 8vw, 80px) 20px;
+  padding: clamp(30px, 10vw, 80px) 20px;
   position: relative;
   overflow: hidden;
 }
 
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: auto -80px -120px auto;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-}
-
 .hero h1 {
   margin: 0 0 12px;
-  font-size: clamp(1.5rem, 5vw, 3.1rem);
+  font-size: clamp(1.4rem, 5vw, 3.1rem);
   line-height: 1.2;
 }
 
 .hero p {
   margin: 0;
-  font-size: clamp(0.9rem, 3vw, 1.05rem);
-  letter-spacing: 0.05em;
+  font-size: clamp(0.85rem, 3vw, 1.05rem);
   opacity: 0.9;
 }
 
-/* 內容區塊通用樣式 */
+/* 內容區塊彈性內距 */
 .section {
-  padding: clamp(40px, 6vw, 64px) 5%;
+  padding: clamp(30px, 6vw, 64px) 5%;
   text-align: center;
 }
 
 .section h2 {
   margin: 0 0 14px;
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(1.4rem, 4vw, 2rem);
   font-weight: 900;
-  letter-spacing: 1px;
 }
 
 .section-intro {
   margin: 0 auto 28px;
   max-width: 760px;
   color: var(--muted);
-  line-height: 1.8;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  line-height: 1.7;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
 }
 
-/* 標題裝飾星星 */
-.star-icon {
-  color: var(--gold);
-  margin: 0 8px;
-  display: inline-block;
-}
+.star-icon { color: var(--gold); margin: 0 5px; }
 
-/* 容器樣式 */
+/* 容器寬度限制與圓角 */
 .seamless-container {
   max-width: 1000px;
   margin: 0 auto 40px;
   background: var(--white);
-  border-radius: 22px;
+  border-radius: clamp(12px, 3vw, 22px);
   box-shadow: var(--shadow);
   overflow: hidden;
   width: 100%;
@@ -162,26 +139,22 @@ body {
 .viewer-frame {
   width: 100%;
   border: none;
-  background: transparent;
   display: block;
 }
 
-#feature-iframe {
-  height: clamp(500px, 80vh, 900px); 
+/* 讓框架高度在手機上變矮，電腦上維持高大 */
+#feature-iframe, #selection-iframe {
+  height: clamp(450px, 80vh, 900px);
 }
 
-#selection-iframe {
-  height: clamp(500px, 80vh, 850px); 
-}
-
-/* 獨家推出區塊樣式 */
+/* 獨家推出：左右無縫拼接在各平台都維持 1:1 或固定比例 */
 .exclusive-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
   max-width: 1000px;
   margin: 0 auto;
-  border-radius: 20px;
+  border-radius: clamp(12px, 3vw, 20px);
   overflow: hidden;
   box-shadow: var(--shadow);
 }
@@ -192,78 +165,56 @@ body {
   display: block;
 }
 
-/* 網格佈局優化 */
+/* 網格卡片自動換行 */
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 45%, 240px), 1fr));
+  gap: clamp(12px, 2vw, 24px);
   max-width: 1100px;
-  margin: 40px auto 0;
+  margin: 30px auto 0;
 }
 
 .resource-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 100%, 300px), 1fr));
   gap: 24px;
   max-width: 1100px;
-  margin: 40px auto 0;
+  margin: 30px auto 0;
 }
 
-/* 卡片設計 */
 .card, .res-card {
   background: var(--white);
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   text-align: left;
-  display: flex;
-  flex-direction: column;
 }
 
-.card { transition: box-shadow 0.3s ease; }
-.card:hover { box-shadow: 0 15px 30px rgba(30, 136, 229, 0.15); }
-
-.res-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.res-card:hover { 
-  transform: translateY(-8px); 
-  box-shadow: 0 15px 30px rgba(30, 136, 229, 0.15);
-}
+.res-card:hover { transform: translateY(-8px); }
 
 .card img, .res-card img {
   width: 100%;
-  aspect-ratio: 4/3;
-  object-fit: cover; 
-  display: block;
+  aspect-ratio: 16/10;
+  object-fit: cover;
 }
 
 .card h3, .res-card h3 { 
-  margin: 15px 0 10px; 
-  padding: 0 20px; 
-  font-size: clamp(1.1rem, 3vw, 1.2rem); 
-  line-height: 1.4; 
+  margin: 15px 0 8px; 
+  padding: 0 15px; 
+  font-size: clamp(1rem, 3vw, 1.2rem); 
 }
 
 .card p, .res-card p { 
-  margin: 0 0 20px; 
-  padding: 0 20px; 
-  line-height: 1.6; 
+  margin: 0 0 15px; 
+  padding: 0 15px; 
+  line-height: 1.5; 
   color: var(--muted); 
-  font-size: 0.95rem;
-  flex-grow: 1;
-}
-
-.ebook-box {
-  max-width: 1000px;
-  margin: 0 auto;
-  border-radius: 22px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  width: 100%;
+  font-size: 0.9rem;
 }
 
 .ebook-box iframe { 
   width: 100%; 
-  height: clamp(400px, 60vh, 500px); 
+  height: clamp(350px, 60vh, 500px); 
   border: none; 
 }
 
@@ -272,46 +223,39 @@ body {
   width: 100%; 
   border: none; 
   background: #000; 
-  display: block;
 }
 
 .resource-badge {
   display: inline-block;
-  padding: 4px 14px;
+  padding: 4px 12px;
   border-radius: 999px;
   background: rgba(30, 136, 229, 0.1);
   color: var(--blue);
   font-size: 0.8rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .footer {
   background: #222;
-  color: var(--white);
+  color: #fff;
   text-align: center;
   padding: 30px 20px;
   margin-top: 40px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
-@media (max-width: 768px) {
-  .navbar { padding: 0 15px; }
-  .logo { height: 32px; }
-  .section { padding: 40px 15px; }
-  .exclusive-grid { grid-template-columns: 1fr 1fr; }
-}
-
+/* 手機版導覽列專屬優化 */
 @media (max-width: 480px) {
-  .nav-right { gap: 2px; }
-  .nav-btn { padding: 6px 8px; }
-  .feature-grid { grid-template-columns: 1fr; }
+  .navbar { padding: 0 10px; }
+  .nav-btn { padding: 6px 5px; }
+  .section { padding: 30px 10px; }
 }
 </style>
 </head>
 <body>
 
-<audio id="bgMusic" autoplay loop>
+<audio id="bgMusic" loop preload="auto">
   <source src="Steps_Into_Daylight.mp3" type="audio/mpeg">
 </audio>
 
@@ -331,6 +275,7 @@ body {
   <p>數位整合 × 深耕語文 × 教學創新</p>
 </div>
 
+<!-- 教材預覽 -->
 <section class="section">
   <h2 id="feature-title">教材預覽</h2>
   <p id="feature-intro" class="section-intro"></p>
@@ -339,6 +284,7 @@ body {
   </div>
 </section>
 
+<!-- 獨家推出 (國小專用) -->
 <section id="exclusive-section" class="section" style="background: var(--white); display: none;">
   <h2><span class="star-icon">⭐</span>獨家推出，教材小幫手<span class="star-icon">⭐</span></h2>
   <p class="section-intro">別間攏無喔</p>
@@ -348,18 +294,17 @@ body {
   </div>
 </section>
 
+<!-- 必選理由 -->
 <section class="section" style="background: #edf2f7;">
   <h2 id="selection-title">必選理由</h2>
   <p id="selection-intro" class="section-intro"></p>
-  
   <div class="seamless-container">
     <iframe id="selection-iframe" class="viewer-frame" src="" title="特色檔案展示"></iframe>
   </div>
-
-  <div class="feature-grid" id="selection-grid">
-    </div>
+  <div class="feature-grid" id="selection-grid"></div>
 </section>
 
+<!-- 電子書 -->
 <section class="section" style="background: var(--white)">
   <h2>電子書試閱</h2>
   <p id="ebook-note" class="muted" style="margin-bottom: 20px;"></p>
@@ -368,19 +313,20 @@ body {
   </div>
 </section>
 
+<!-- 影片 -->
 <section class="section">
   <h2>教材演示影片</h2>
   <p id="video-intro" class="section-intro"></p>
-  <div class="seamless-container" style="border-radius: 22px; line-height: 0;">
+  <div class="seamless-container" style="line-height: 0;">
     <iframe id="video-iframe" class="video-frame" src="" allowfullscreen></iframe>
   </div>
 </section>
 
+<!-- 資源 -->
 <section class="section">
   <h2>數位資源展示</h2>
   <p id="resource-intro" class="section-intro"></p>
-  <div class="resource-grid" id="resource-grid">
-    </div>
+  <div class="resource-grid" id="resource-grid"></div>
 </section>
 
 <div class="footer">
@@ -389,15 +335,14 @@ body {
 </div>
 
 <script>
-// 音訊自動播放補強：當使用者點擊頁面任何地方時嘗試播放 (因應瀏覽器安全限制)
+// 音訊點擊啟動
 document.addEventListener('click', function() {
     const audio = document.getElementById('bgMusic');
-    if (audio.paused) {
-        audio.play();
+    if (audio && audio.paused) {
+        audio.play().catch(e => console.log("音訊啟動需使用者互動"));
     }
-}, { once: true }); // 只執行一次
+}, { once: true });
 
-// 圖檔連結定義
 const scenarioImg = "https://cdn.phototourl.com/free/2026-04-02-4edcea49-9c9f-45b7-9741-e5068be1c6db.png";
 const gameInteractionImg = "https://cdn.phototourl.com/free/2026-04-02-141c2874-2e7e-499a-a199-1e00dee3e4d0.png";
 const digitalIntegrationImg = "https://image2url.com/r2/default/images/1775133746647-39b0cf9c-0033-4cd1-aaf9-3bae4bb21e9b.png";
@@ -483,20 +428,19 @@ const contentData = {
 function switchContent(level) {
   const data = contentData[level];
   
+  // 啟動音樂
+  const music = document.getElementById('bgMusic');
+  if (music && music.paused) music.play().catch(e => {});
+
   document.getElementById('hero-title').innerText = data.heroTitle;
   document.getElementById('feature-title').innerText = data.featureTitle;
   document.getElementById('feature-intro').innerText = data.featureIntro;
   document.getElementById('feature-iframe').src = data.featureIframe;
-
   document.getElementById('selection-title').innerText = data.selectionTitle;
   document.getElementById('selection-iframe').src = data.selectionIframe;
   
   const exclusiveSec = document.getElementById('exclusive-section');
-  if (level === 'primary') {
-    exclusiveSec.style.display = 'block';
-  } else {
-    exclusiveSec.style.display = 'none';
-  }
+  exclusiveSec.style.display = (level === 'primary') ? 'block' : 'none';
 
   const selectionGrid = document.getElementById('selection-grid');
   selectionGrid.innerHTML = data.selectionReasons.map(r => `
@@ -526,7 +470,6 @@ function switchContent(level) {
 
   document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
   document.getElementById('btn-' + level).classList.add('active');
-  
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
