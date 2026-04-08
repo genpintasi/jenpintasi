@@ -32,7 +32,7 @@ body {
     var(--bg);
   color: var(--text);
   padding-top: var(--nav-height);
-  overflow-x: hidden; /* 徹底杜絕水平捲動 */
+  overflow-x: hidden; 
 }
 
 /* 導覽列彈性調整 */
@@ -81,7 +81,7 @@ body {
   color: var(--white);
 }
 
-/* Hero 區塊縮放 */
+/* Hero 區塊 */
 .hero {
   background: linear-gradient(135deg, var(--red), var(--blue));
   color: var(--white);
@@ -103,7 +103,7 @@ body {
   opacity: 0.9;
 }
 
-/* 內容區塊彈性內距 */
+/* 內容區塊 */
 .section {
   padding: clamp(30px, 6vw, 64px) 5%;
   text-align: center;
@@ -125,13 +125,11 @@ body {
 
 .star-icon { color: var(--gold); margin: 0 5px; }
 
-/* 容器寬度限制與圓角 */
-.seamless-container {
+/* 無縫預覽容器 */
+.seamless-preview-box {
   max-width: 1000px;
   margin: 0 auto 40px;
-  background: var(--white);
-  border-radius: clamp(12px, 3vw, 22px);
-  box-shadow: var(--shadow);
+  background: transparent;
   overflow: hidden;
   width: 100%;
 }
@@ -140,14 +138,33 @@ body {
   width: 100%;
   border: none;
   display: block;
+  background: transparent;
 }
 
-/* 讓框架高度在手機上變矮，電腦上維持高大 */
-#feature-iframe, #selection-iframe {
-  height: clamp(450px, 80vh, 900px);
+/* 教材預覽與電子書高度 */
+#feature-iframe {
+  height: clamp(500px, 90vh, 1000px);
 }
 
-/* 獨家推出：左右無縫拼接在各平台都維持 1:1 或固定比例 */
+#ebook-iframe {
+  height: clamp(500px, 90vh, 900px);
+}
+
+/* 必選理由海報專用：縮短高度以切齊海報底部，減少留白 */
+.poster-container {
+  max-width: 1000px;
+  margin: 0 auto 40px;
+  background: transparent;
+  overflow: hidden;
+  width: 100%;
+}
+
+#selection-iframe {
+  /* 縮短高度比例，切齊海報底部 */
+  height: clamp(600px, 142vh, 1420px);
+}
+
+/* 獨家推出：無縫拼接圖片 */
 .exclusive-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -165,7 +182,7 @@ body {
   display: block;
 }
 
-/* 網格卡片自動換行 */
+/* 網格卡片 */
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 45%, 240px), 1fr));
@@ -212,12 +229,6 @@ body {
   font-size: 0.9rem;
 }
 
-.ebook-box iframe { 
-  width: 100%; 
-  height: clamp(350px, 60vh, 500px); 
-  border: none; 
-}
-
 .video-frame { 
   aspect-ratio: 16/9; 
   width: 100%; 
@@ -227,7 +238,7 @@ body {
 
 .resource-badge {
   display: inline-block;
-  padding: 4px 12px;
+  padding: 4px 14px;
   border-radius: 999px;
   background: rgba(30, 136, 229, 0.1);
   color: var(--blue);
@@ -245,16 +256,18 @@ body {
   font-size: 0.85rem;
 }
 
-/* 手機版導覽列專屬優化 */
 @media (max-width: 480px) {
   .navbar { padding: 0 10px; }
   .nav-btn { padding: 6px 5px; }
   .section { padding: 30px 10px; }
+  /* 手機版海報高度同步微調 */
+  #selection-iframe { height: clamp(500px, 142vh, 1000px); }
 }
 </style>
 </head>
 <body>
 
+<!-- 背景音樂 -->
 <audio id="bgMusic" loop preload="auto">
   <source src="Steps_Into_Daylight.mp3" type="audio/mpeg">
 </audio>
@@ -279,7 +292,7 @@ body {
 <section class="section">
   <h2 id="feature-title">教材預覽</h2>
   <p id="feature-intro" class="section-intro"></p>
-  <div class="seamless-container">
+  <div class="seamless-preview-box">
     <iframe id="feature-iframe" class="viewer-frame" src="" title="教材檔案"></iframe>
   </div>
 </section>
@@ -294,22 +307,22 @@ body {
   </div>
 </section>
 
-<!-- 必選理由 -->
+<!-- 必選理由：高度優化後的海報預覽 -->
 <section class="section" style="background: #edf2f7;">
   <h2 id="selection-title">必選理由</h2>
   <p id="selection-intro" class="section-intro"></p>
-  <div class="seamless-container">
+  <div class="poster-container">
     <iframe id="selection-iframe" class="viewer-frame" src="" title="特色檔案展示"></iframe>
   </div>
   <div class="feature-grid" id="selection-grid"></div>
 </section>
 
-<!-- 電子書 -->
+<!-- 電子書試閱 -->
 <section class="section" style="background: var(--white)">
   <h2>電子書試閱</h2>
   <p id="ebook-note" class="muted" style="margin-bottom: 20px;"></p>
-  <div class="ebook-box">
-    <iframe id="ebook-iframe" src="" title="電子書"></iframe>
+  <div class="seamless-preview-box">
+    <iframe id="ebook-iframe" class="viewer-frame" src="" title="電子書"></iframe>
   </div>
 </section>
 
@@ -317,7 +330,7 @@ body {
 <section class="section">
   <h2>教材演示影片</h2>
   <p id="video-intro" class="section-intro"></p>
-  <div class="seamless-container" style="line-height: 0;">
+  <div class="seamless-preview-box" style="border-radius: 22px; box-shadow: var(--shadow); background: #000;">
     <iframe id="video-iframe" class="video-frame" src="" allowfullscreen></iframe>
   </div>
 </section>
@@ -335,11 +348,11 @@ body {
 </div>
 
 <script>
-// 音訊點擊啟動
+// 音訊點擊啟動機制
 document.addEventListener('click', function() {
     const audio = document.getElementById('bgMusic');
     if (audio && audio.paused) {
-        audio.play().catch(e => console.log("音訊啟動需使用者互動"));
+        audio.play().catch(e => {});
     }
 }, { once: true });
 
@@ -428,7 +441,7 @@ const contentData = {
 function switchContent(level) {
   const data = contentData[level];
   
-  // 啟動音樂
+  // 啟動背景音樂 (使用者互動觸發)
   const music = document.getElementById('bgMusic');
   if (music && music.paused) music.play().catch(e => {});
 
