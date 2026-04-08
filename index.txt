@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>115學年真平教材．數位搶先看</title>
 
 <style>
@@ -35,14 +35,14 @@ body {
   overflow-x: hidden; 
 }
 
-/* 導覽列彈性調整 */
+/* 導覽列 */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: var(--nav-height);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
@@ -53,19 +53,19 @@ body {
 }
 
 .logo {
-  height: clamp(30px, 4vw, 40px);
+  height: clamp(28px, 4vw, 40px);
   width: auto;
 }
 
 .nav-right {
   display: flex;
-  gap: clamp(2px, 1vw, 5px);
+  gap: clamp(2px, 1vw, 8px);
 }
 
 .nav-btn {
   text-decoration: none;
   color: var(--text);
-  padding: 8px clamp(8px, 1.5vw, 12px);
+  padding: 8px clamp(6px, 1.5vw, 16px);
   border-radius: 8px;
   font-weight: 500;
   transition: all 0.3s ease;
@@ -86,52 +86,70 @@ body {
   background: linear-gradient(135deg, var(--red), var(--blue));
   color: var(--white);
   text-align: center;
-  padding: clamp(30px, 10vw, 80px) 20px;
+  padding: clamp(30px, 8vw, 80px) 20px;
   position: relative;
   overflow: hidden;
 }
 
 .hero h1 {
   margin: 0 0 12px;
-  font-size: clamp(1.4rem, 5vw, 3.1rem);
+  font-size: clamp(1.3rem, 5vw, 3.1rem);
   line-height: 1.2;
 }
 
 .hero p {
   margin: 0;
-  font-size: clamp(0.85rem, 3vw, 1.05rem);
-  opacity: 0.9;
+  font-size: clamp(0.8rem, 2.5vw, 1.05rem);
+  opacity: 0.95;
 }
 
 /* 內容區塊 */
 .section {
-  padding: clamp(30px, 6vw, 64px) 5%;
+  padding: clamp(24px, 5vw, 64px) 4%;
   text-align: center;
 }
 
 .section h2 {
   margin: 0 0 14px;
-  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
   font-weight: 900;
 }
 
 .section-intro {
   margin: 0 auto 28px;
-  max-width: 760px;
+  max-width: 800px;
   color: var(--muted);
   line-height: 1.7;
-  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  font-size: clamp(0.85rem, 2.2vw, 1rem);
 }
 
 .star-icon { color: var(--gold); margin: 0 5px; }
 
-/* 無縫預覽容器 */
+/* 響應式容器：核心縮放機制 */
 .seamless-preview-box {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto 40px;
   background: transparent;
   overflow: hidden;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 海報專用容器：增加四周比例空白 */
+.poster-frame-container {
+  max-width: 1000px;
+  margin: 0 auto 40px;
+  background: var(--white); /* 白色襯底 */
+  border-radius: clamp(16px, 3vw, 32px);
+  box-shadow: var(--shadow);
+  padding: clamp(15px, 4vw, 45px); /* 四周按比例留白 */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .viewer-frame {
@@ -141,27 +159,18 @@ body {
   background: transparent;
 }
 
-/* 教材預覽與電子書高度 */
+/* 不同檔案的高度比例校準 */
 #feature-iframe {
-  height: clamp(500px, 90vh, 1000px);
-}
-
-#ebook-iframe {
-  height: clamp(500px, 90vh, 900px);
-}
-
-/* 必選理由海報專用：縮短高度以切齊海報底部，減少留白 */
-.poster-container {
-  max-width: 1000px;
-  margin: 0 auto 40px;
-  background: transparent;
-  overflow: hidden;
-  width: 100%;
+  height: clamp(450px, 75vw, 900px);
 }
 
 #selection-iframe {
-  /* 縮短高度比例，切齊海報底部 */
-  height: clamp(600px, 142vh, 1420px);
+  /* 鎖定海報長寬比，確保與外框留白同步縮放 */
+  height: clamp(600px, 136vw, 1360px); 
+}
+
+#ebook-iframe {
+  height: clamp(400px, 70vw, 800px);
 }
 
 /* 獨家推出：無縫拼接圖片 */
@@ -171,7 +180,7 @@ body {
   gap: 0;
   max-width: 1000px;
   margin: 0 auto;
-  border-radius: clamp(12px, 3vw, 20px);
+  border-radius: clamp(10px, 2vw, 20px);
   overflow: hidden;
   box-shadow: var(--shadow);
 }
@@ -185,15 +194,15 @@ body {
 /* 網格卡片 */
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 45%, 240px), 1fr));
-  gap: clamp(12px, 2vw, 24px);
+  grid-template-columns: repeat(auto-fit, minmax(clamp(150px, 45%, 250px), 1fr));
+  gap: clamp(10px, 2vw, 24px);
   max-width: 1100px;
   margin: 30px auto 0;
 }
 
 .resource-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 100%, 300px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(clamp(260px, 100%, 340px), 1fr));
   gap: 24px;
   max-width: 1100px;
   margin: 30px auto 0;
@@ -205,20 +214,22 @@ body {
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
-.res-card:hover { transform: translateY(-8px); }
+.res-card:hover { transform: translateY(-5px); }
 
 .card img, .res-card img {
   width: 100%;
-  aspect-ratio: 16/10;
+  aspect-ratio: 16/11;
   object-fit: cover;
 }
 
 .card h3, .res-card h3 { 
   margin: 15px 0 8px; 
   padding: 0 15px; 
-  font-size: clamp(1rem, 3vw, 1.2rem); 
+  font-size: clamp(1rem, 2.5vw, 1.15rem); 
 }
 
 .card p, .res-card p { 
@@ -227,6 +238,7 @@ body {
   line-height: 1.5; 
   color: var(--muted); 
   font-size: 0.9rem;
+  flex-grow: 1;
 }
 
 .video-frame { 
@@ -234,15 +246,16 @@ body {
   width: 100%; 
   border: none; 
   background: #000; 
+  display: block;
 }
 
 .resource-badge {
   display: inline-block;
-  padding: 4px 14px;
+  padding: 4px 12px;
   border-radius: 999px;
   background: rgba(30, 136, 229, 0.1);
   color: var(--blue);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   margin-bottom: 5px;
 }
@@ -251,23 +264,23 @@ body {
   background: #222;
   color: #fff;
   text-align: center;
-  padding: 30px 20px;
+  padding: 40px 20px;
   margin-top: 40px;
   font-size: 0.85rem;
+  line-height: 1.6;
 }
 
 @media (max-width: 480px) {
   .navbar { padding: 0 10px; }
-  .nav-btn { padding: 6px 5px; }
-  .section { padding: 30px 10px; }
-  /* 手機版海報高度同步微調 */
-  #selection-iframe { height: clamp(500px, 142vh, 1000px); }
+  .nav-btn { padding: 6px 4px; border-radius: 4px; }
+  .section { padding: 30px 15px; }
+  .exclusive-grid { border-radius: 8px; }
+  .poster-frame-container { padding: 12px; } /* 手機版留白略縮 */
 }
 </style>
 </head>
-<body>
+<body onclick="initAudio()">
 
-<!-- 背景音樂 -->
 <audio id="bgMusic" loop preload="auto">
   <source src="Steps_Into_Daylight.mp3" type="audio/mpeg">
 </audio>
@@ -297,7 +310,7 @@ body {
   </div>
 </section>
 
-<!-- 獨家推出 (國小專用) -->
+<!-- 獨家推出 -->
 <section id="exclusive-section" class="section" style="background: var(--white); display: none;">
   <h2><span class="star-icon">⭐</span>獨家推出，教材小幫手<span class="star-icon">⭐</span></h2>
   <p class="section-intro">別間攏無喔</p>
@@ -307,11 +320,11 @@ body {
   </div>
 </section>
 
-<!-- 必選理由：高度優化後的海報預覽 -->
+<!-- 必選理由：具備比例空白的海報展示區 -->
 <section class="section" style="background: #edf2f7;">
   <h2 id="selection-title">必選理由</h2>
   <p id="selection-intro" class="section-intro"></p>
-  <div class="poster-container">
+  <div class="poster-frame-container">
     <iframe id="selection-iframe" class="viewer-frame" src="" title="特色檔案展示"></iframe>
   </div>
   <div class="feature-grid" id="selection-grid"></div>
@@ -330,7 +343,7 @@ body {
 <section class="section">
   <h2>教材演示影片</h2>
   <p id="video-intro" class="section-intro"></p>
-  <div class="seamless-preview-box" style="border-radius: 22px; box-shadow: var(--shadow); background: #000;">
+  <div class="seamless-preview-box" style="border-radius: clamp(12px, 3vw, 22px); box-shadow: var(--shadow); background: #000;">
     <iframe id="video-iframe" class="video-frame" src="" allowfullscreen></iframe>
   </div>
 </section>
@@ -348,7 +361,7 @@ body {
 </div>
 
 <script>
-// 音訊點擊啟動機制
+// 音訊點擊啟動
 document.addEventListener('click', function() {
     const audio = document.getElementById('bgMusic');
     if (audio && audio.paused) {
@@ -438,12 +451,14 @@ const contentData = {
   }
 };
 
-function switchContent(level) {
-  const data = contentData[level];
-  
-  // 啟動背景音樂 (使用者互動觸發)
+function initAudio() {
   const music = document.getElementById('bgMusic');
   if (music && music.paused) music.play().catch(e => {});
+}
+
+function switchContent(level) {
+  const data = contentData[level];
+  initAudio();
 
   document.getElementById('hero-title').innerText = data.heroTitle;
   document.getElementById('feature-title').innerText = data.featureTitle;
